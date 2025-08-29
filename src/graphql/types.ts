@@ -8,6 +8,14 @@ export type UpdateUserMutation = {
   updateOneUser: Pick<Types.User, 'id' | 'name' | 'avatarUrl' | 'email' | 'phone' | 'jobTitle'>;
 };
 
+export type DashboardTotalCountsQueryVariables = Types.Exact<{ [key: string]: never }>;
+
+export type DashboardTotalCountsQuery = {
+  companies: Pick<Types.CompanyConnection, 'totalCount'>;
+  contacts: Pick<Types.ContactConnection, 'totalCount'>;
+  deals: Pick<Types.DealConnection, 'totalCount'>;
+};
+
 export type UsersSelectQueryVariables = Types.Exact<{
   filter: Types.UserFilter;
   sorting?: Types.InputMaybe<Array<Types.UserSort> | Types.UserSort>;
