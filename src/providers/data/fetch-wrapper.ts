@@ -1,19 +1,19 @@
-import { GraphQLFormattedError } from "graphql";
+import { GraphQLFormattedError } from 'graphql';
 
 type Error = {
   message: string;
-  statusCode: string
-}
+  statusCode: string;
+};
 
 const customFetch = async (url: string, options: RequestInit = {}) => {
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem('access_token');
 
   // Merge headers
   const headers: Record<string, string> = {
     ...(options.headers as Record<string, string>),
     Authorization: `Bearer ${accessToken}`,
-    "Content-Type": "application/json",
-    "Apollo-Require-Preflight": "true",
+    'Content-Type': 'application/json',
+    'Apollo-Require-Preflight': 'true',
   };
 
   return await fetch(url, {
@@ -22,32 +22,27 @@ const customFetch = async (url: string, options: RequestInit = {}) => {
   });
 };
 
-
-
-const getGraphQLErrors = (
-  body: Record<"errors", GraphQLFormattedError[]> | undefined
-): Error | null => {
+const getGraphQLErrors = (body: Record<'errors', GraphQLFormattedError[]> | undefined): Error | null => {
   if (!body) {
     return {
-      message: "Unknown error",
-      statusCode: "INTERNAL_SERVER_ERROR",
+      message: 'Unknown error',
+      statusCode: 'INTERNAL_SERVER_ERROR',
     };
   }
 
-  if("errors" in body) {
+  if ('errors' in body) {
     const errors = body?.errors;
 
-    const messages = errors?.map((error) => error?.message)?.join("");
+    const messages = errors?.map((error) => error?.message)?.join('');
     const code = errors?.[0]?.extensions?.code;
 
     return {
       message: messages || JSON.stringify(errors),
-      statusCode: code || 500
-    }
+      statusCode: code || 500,
+    };
   }
 
-  return null
-
+  return null;
 };
 
 export const fetchWrapper = async (url: string, options: RequestInit = {}) => {
