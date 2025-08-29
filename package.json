@@ -42,7 +42,9 @@
     "build": "tsc && refine build",
     "start": "refine start",
     "refine": "refine",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
   },
   "browserslist": {
     "production": [
