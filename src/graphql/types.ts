@@ -31,3 +31,36 @@ export type TaskStagesSelectQuery = {
     nodes: Array<Pick<Types.TaskStage, 'id' | 'title'>>;
   };
 };
+
+export type DashboardCalendarUpcomingEventsQueryVariables = Types.Exact<{
+  filter: Types.EventFilter;
+  sorting?: Types.InputMaybe<Array<Types.EventSort> | Types.EventSort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type DashboardCalendarUpcomingEventsQuery = {
+  events: Pick<Types.EventConnection, 'totalCount'> & {
+    nodes: Array<Pick<Types.Event, 'id' | 'title' | 'color' | 'startDate' | 'endDate'>>;
+  };
+};
+
+export type DashboardDealsChartQueryVariables = Types.Exact<{
+  filter: Types.DealStageFilter;
+  sorting?: Types.InputMaybe<Array<Types.DealStageSort> | Types.DealStageSort>;
+  paging?: Types.InputMaybe<Types.OffsetPaging>;
+}>;
+
+export type DashboardDealsChartQuery = {
+  dealStages: Pick<Types.DealStageConnection, 'totalCount'> & {
+    nodes: Array<
+      Pick<Types.DealStage, 'id' | 'title'> & {
+        dealsAggregate: Array<{
+          groupBy?: Types.Maybe<
+            Pick<Types.DealStageDealsAggregateGroupBy, 'closeDateMonth' | 'closeDateYear'>
+          >;
+          sum?: Types.Maybe<Pick<Types.DealStageDealsSumAggregate, 'value'>>;
+        }>;
+      }
+    >;
+  };
+};
