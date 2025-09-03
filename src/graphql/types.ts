@@ -8,6 +8,61 @@ export type UpdateUserMutation = {
   updateOneUser: Pick<Types.User, 'id' | 'name' | 'avatarUrl' | 'email' | 'phone' | 'jobTitle'>;
 };
 
+export type CreateCompanyMutationVariables = Types.Exact<{
+  input: Types.CreateOneCompanyInput;
+}>;
+
+export type CreateCompanyMutation = {
+  createOneCompany: Pick<Types.Company, 'id'> & { salesOwner: Pick<Types.User, 'id'> };
+};
+
+export type UpdateCompanyMutationVariables = Types.Exact<{
+  input: Types.UpdateOneCompanyInput;
+}>;
+
+export type UpdateCompanyMutation = {
+  updateOneCompany: Pick<
+    Types.Company,
+    | 'id'
+    | 'name'
+    | 'totalRevenue'
+    | 'industry'
+    | 'companySize'
+    | 'businessType'
+    | 'country'
+    | 'website'
+    | 'avatarUrl'
+  > & { salesOwner: Pick<Types.User, 'id' | 'name' | 'avatarUrl'> };
+};
+
+export type UpdateTaskStageMutationVariables = Types.Exact<{
+  input: Types.UpdateOneTaskInput;
+}>;
+
+export type UpdateTaskStageMutation = { updateOneTask: Pick<Types.Task, 'id'> };
+
+export type CreateTaskMutationVariables = Types.Exact<{
+  input: Types.CreateOneTaskInput;
+}>;
+
+export type CreateTaskMutation = {
+  createOneTask: Pick<Types.Task, 'id' | 'title'> & {
+    stage?: Types.Maybe<Pick<Types.TaskStage, 'id' | 'title'>>;
+  };
+};
+
+export type UpdateTaskMutationVariables = Types.Exact<{
+  input: Types.UpdateOneTaskInput;
+}>;
+
+export type UpdateTaskMutation = {
+  updateOneTask: Pick<Types.Task, 'id' | 'title' | 'completed' | 'description' | 'dueDate'> & {
+    stage?: Types.Maybe<Pick<Types.TaskStage, 'id' | 'title'>>;
+    users: Array<Pick<Types.User, 'id' | 'name' | 'avatarUrl'>>;
+    checklist: Array<Pick<Types.CheckListItem, 'title' | 'checked'>>;
+  };
+};
+
 export type DashboardTotalCountsQueryVariables = Types.Exact<{ [key: string]: never }>;
 
 export type DashboardTotalCountsQuery = {
@@ -123,33 +178,6 @@ export type CompaniesListQuery = {
   };
 };
 
-export type CreateCompanyMutationVariables = Types.Exact<{
-  input: Types.CreateOneCompanyInput;
-}>;
-
-export type CreateCompanyMutation = {
-  createOneCompany: Pick<Types.Company, 'id'> & { salesOwner: Pick<Types.User, 'id'> };
-};
-
-export type UpdateCompanyMutationVariables = Types.Exact<{
-  input: Types.UpdateOneCompanyInput;
-}>;
-
-export type UpdateCompanyMutation = {
-  updateOneCompany: Pick<
-    Types.Company,
-    | 'id'
-    | 'name'
-    | 'totalRevenue'
-    | 'industry'
-    | 'companySize'
-    | 'businessType'
-    | 'country'
-    | 'website'
-    | 'avatarUrl'
-  > & { salesOwner: Pick<Types.User, 'id' | 'name' | 'avatarUrl'> };
-};
-
 export type CompanyContactsTableQueryVariables = Types.Exact<{
   filter: Types.ContactFilter;
   sorting?: Types.InputMaybe<Array<Types.ContactSort> | Types.ContactSort>;
@@ -160,6 +188,35 @@ export type CompanyContactsTableQuery = {
   contacts: Pick<Types.ContactConnection, 'totalCount'> & {
     nodes: Array<
       Pick<Types.Contact, 'id' | 'name' | 'avatarUrl' | 'jobTitle' | 'email' | 'phone' | 'status'>
+    >;
+  };
+};
+
+export type TaskStagesQueryVariables = Types.Exact<{
+  filter: Types.TaskStageFilter;
+  sorting?: Types.InputMaybe<Array<Types.TaskStageSort> | Types.TaskStageSort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type TaskStagesQuery = {
+  taskStages: Pick<Types.TaskStageConnection, 'totalCount'> & {
+    nodes: Array<Pick<Types.TaskStage, 'id' | 'title'>>;
+  };
+};
+
+export type TasksQueryVariables = Types.Exact<{
+  filter: Types.TaskFilter;
+  sorting?: Types.InputMaybe<Array<Types.TaskSort> | Types.TaskSort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type TasksQuery = {
+  tasks: Pick<Types.TaskConnection, 'totalCount'> & {
+    nodes: Array<
+      Pick<
+        Types.Task,
+        'id' | 'title' | 'description' | 'dueDate' | 'completed' | 'stageId' | 'createdAt' | 'updatedAt'
+      > & { users: Array<Pick<Types.User, 'id' | 'name' | 'avatarUrl'>> }
     >;
   };
 };

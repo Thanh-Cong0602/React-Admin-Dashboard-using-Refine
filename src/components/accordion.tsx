@@ -1,6 +1,5 @@
-import { Text } from '@/components';
-
-import { AccordionHeaderSkeleton } from './accordion-header-skeleton';
+import { AccordionHeaderSkeleton } from './skeleton/accordion-header-skeleton';
+import { Text } from './text';
 
 type Props = React.PropsWithChildren<{
   accordionKey: string;
@@ -27,9 +26,7 @@ export const Accordion = ({
   children,
   isLoading,
 }: Props) => {
-  if (isLoading) {
-    return <AccordionHeaderSkeleton />;
-  }
+  if (isLoading) return <AccordionHeaderSkeleton />;
 
   const isActive = activeKey === accordionKey;
 
@@ -53,7 +50,14 @@ export const Accordion = ({
     >
       <div style={{ marginTop: '1px', flexShrink: 0 }}>{icon}</div>
       {isActive ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            flex: 1,
+          }}
+        >
           <Text strong onClick={toggleAccordion} style={{ cursor: 'pointer' }}>
             {label}
           </Text>

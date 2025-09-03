@@ -16,7 +16,18 @@ import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
 import { pathName } from './common/constant/routes';
 import { Layout } from './components';
 import { resources } from './config/resources';
-import { CompanyEditPage, CompanyList, Create, ForgotPassword, Home, Login, Register } from './pages';
+import {
+  CompanyEditPage,
+  CompanyList,
+  Create,
+  ForgotPassword,
+  Home,
+  Login,
+  Register,
+  TasksList,
+} from './pages';
+import TasksCreatePage from './pages/tasks/create';
+import TasksEditPage from './pages/tasks/edit';
 import { authProvider, dataProvider, liveProvider } from './providers';
 
 function App() {
@@ -58,12 +69,27 @@ function App() {
                     <Route path="new" element={<Create />} />
                     <Route path="edit/:id" element={<CompanyEditPage />} />
                   </Route>
+
+                  <Route
+                    path={pathName.TASKS}
+                    element={
+                      <TasksList>
+                        <Outlet />
+                      </TasksList>
+                    }
+                  >
+                    <Route path="new" element={<TasksCreatePage />} />
+                    <Route path="edit/:id" element={<TasksEditPage />} />
+                  </Route>
                 </Route>
 
                 <Route index element={<WelcomePage />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+
+                <Route path={pathName.FORGOT_PASSWORD} element={<ForgotPassword />} />
+
+                <Route path={pathName.LOGIN} element={<Login />} />
+
+                <Route path={pathName.REGISTER} element={<Register />} />
               </Routes>
 
               <RefineKbar />

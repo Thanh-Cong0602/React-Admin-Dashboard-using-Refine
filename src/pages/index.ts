@@ -8,3 +8,5 @@ export * from './register';
 
 export * from './companies';
 
+export * from './tasks';
+
