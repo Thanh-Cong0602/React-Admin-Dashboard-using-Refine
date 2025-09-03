@@ -106,3 +106,60 @@ export type DashboardLatestActivitiesDealsQuery = {
     >;
   };
 };
+
+export type CompaniesListQueryVariables = Types.Exact<{
+  filter: Types.CompanyFilter;
+  sorting?: Types.InputMaybe<Array<Types.CompanySort> | Types.CompanySort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type CompaniesListQuery = {
+  companies: Pick<Types.CompanyConnection, 'totalCount'> & {
+    nodes: Array<
+      Pick<Types.Company, 'id' | 'name' | 'avatarUrl'> & {
+        dealsAggregate: Array<{ sum?: Types.Maybe<Pick<Types.CompanyDealsSumAggregate, 'value'>> }>;
+      }
+    >;
+  };
+};
+
+export type CreateCompanyMutationVariables = Types.Exact<{
+  input: Types.CreateOneCompanyInput;
+}>;
+
+export type CreateCompanyMutation = {
+  createOneCompany: Pick<Types.Company, 'id'> & { salesOwner: Pick<Types.User, 'id'> };
+};
+
+export type UpdateCompanyMutationVariables = Types.Exact<{
+  input: Types.UpdateOneCompanyInput;
+}>;
+
+export type UpdateCompanyMutation = {
+  updateOneCompany: Pick<
+    Types.Company,
+    | 'id'
+    | 'name'
+    | 'totalRevenue'
+    | 'industry'
+    | 'companySize'
+    | 'businessType'
+    | 'country'
+    | 'website'
+    | 'avatarUrl'
+  > & { salesOwner: Pick<Types.User, 'id' | 'name' | 'avatarUrl'> };
+};
+
+export type CompanyContactsTableQueryVariables = Types.Exact<{
+  filter: Types.ContactFilter;
+  sorting?: Types.InputMaybe<Array<Types.ContactSort> | Types.ContactSort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type CompanyContactsTableQuery = {
+  contacts: Pick<Types.ContactConnection, 'totalCount'> & {
+    nodes: Array<
+      Pick<Types.Contact, 'id' | 'name' | 'avatarUrl' | 'jobTitle' | 'email' | 'phone' | 'status'>
+    >;
+  };
+};

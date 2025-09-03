@@ -13,9 +13,10 @@ import routerBindings, {
 import { App as AntdApp } from 'antd';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
 
+import { pathName } from './common/constant/routes';
 import { Layout } from './components';
 import { resources } from './config/resources';
-import { ForgotPassword, Home, Login, Register } from './pages';
+import { CompanyEditPage, CompanyList, Create, ForgotPassword, Home, Login, Register } from './pages';
 import { authProvider, dataProvider, liveProvider } from './providers';
 
 function App() {
@@ -51,6 +52,12 @@ function App() {
                   }
                 >
                   <Route index element={<Home />} />
+
+                  <Route path={pathName.COMPANIES}>
+                    <Route index element={<CompanyList />} />
+                    <Route path="new" element={<Create />} />
+                    <Route path="edit/:id" element={<CompanyEditPage />} />
+                  </Route>
                 </Route>
 
                 <Route index element={<WelcomePage />} />
